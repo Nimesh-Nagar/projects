@@ -3,19 +3,30 @@ import json
 import random
 
 # CSE Parameters
+''' 
+HOST = "127.0.0.1"
+PORT = 8080
 CSE_ID = "CSE_S_ID"
 CSE_NAME = "server"
 ADMIN_ID = "CAdmin"
+'''
+# ask user to enter CSE details to which it wants to communicateo
+HOST = input("Enter host CSE ip address : ")
+PORT = int(input("Enter host CSE port number : "))
+CSE_NAME = input("Enter CSE Base Name : ")
+CSE_ID = input("Enter unique CSE ID : ")
+ADMIN_ID = input("Enter CSE Admin id : ")
 
 AE_NAME = "Test_ae"
 SENSOR_ID = "S_ID"
 
 CNT_NAME = "TEST"
 
+
 #------------------------------------------------ 1. GET Data from CSE Test  -------------------------------------------------------
 
 def get_data_test():
-    url = f"http://localhost:8080/{CSE_NAME}"
+    url = f"http://{HOST}:{PORT}/{CSE_NAME}"
     header = {
         "X-M2M-Origin": ADMIN_ID,
         "X-M2M-RI" : "123",
@@ -36,7 +47,7 @@ def get_data_test():
 #------------------------------------------------ 2. Create AE Test  ----------------------------------------------------------------
 
 def create_ae_test():
-    url = f"http://localhost:8080/{CSE_NAME}"
+    url = f"http://{HOST}:{PORT}/{CSE_NAME}"
     header = {
         "X-M2M-Origin": SENSOR_ID, 
         "X-M2M-RI" : "123",
@@ -50,7 +61,7 @@ def create_ae_test():
             "api": "N01.com.room.sensor01",
             "rr": True,
             "srv": ["2a","3","4"],
-            "poa" : ["http://localhost:8080/ROOM_02"] #user inpute required
+            "poa" : [f"http://{HOST}:{PORT}/ROOM_02"] #user input required
         }
     }
     response = requests.post(url, json=payload, headers=header)
@@ -64,7 +75,7 @@ def create_ae_test():
 #------------------------------------------------ 3. Container Creation under AE Test  -----------------------------------------------
 
 def create_cnt_test():
-    url = f"http://localhost:8080/{CSE_NAME}/ROOM_02"
+    url = f"http://{HOST}:{PORT}/{CSE_NAME}/ROOM_02"
     header = {
         "X-M2M-Origin": SENSOR_ID,
         "X-M2M-RI" : "123",
@@ -86,7 +97,7 @@ def create_cnt_test():
 
 #------------------------------------------------ 4. Content Instance Test -----------------------------------------------------------
 def content_inst_test():
-    url = f"http://localhost:8080/{CSE_NAME}/ROOM_02/TEMPERATURE"
+    url = f"http://{HOST}:{PORT}/{CSE_NAME}/ROOM_02/TEMPERATURE"
     header = {
         "X-M2M-Origin": SENSOR_ID,
         "X-M2M-RI" : "123",
